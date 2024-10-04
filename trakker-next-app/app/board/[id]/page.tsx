@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Board } from '@/components/board/Board';
+import ClientWrapper from '@/components/ClientWrapper';
 
 // This would typically come from a database or API
 const boards = {
@@ -8,16 +9,12 @@ const boards = {
 };
 
 export default function BoardPage({ params }: { params: { id: string } }) {
-  const board = boards[params.id as keyof typeof boards];
-
-  if (!board) {
-    notFound();
-  }
-
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">{board.name}</h1>
-      <Board id={board.id} />
+      <h1 className="text-3xl font-bold">Board: {params.id}</h1>
+      <ClientWrapper>
+        <Board id={params.id} />
+      </ClientWrapper>
     </div>
   );
 }
